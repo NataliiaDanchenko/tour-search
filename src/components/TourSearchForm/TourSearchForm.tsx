@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getCountries, searchGeo } from '../../api/api';
+import { getCountries, searchGeo } from '@/api/api';
+import { renderIcon } from '@/constants/renderIcon';
+import styles from './TourSearchForm.module.scss';
 
 type GeoEntity = {
   id: string | number;
   name: string;
   type: 'country' | 'city' | 'hotel';
-  countryId?: string; 
+  countryId?: string;
 };
 
 type TourSearchFormProps = {
@@ -13,7 +15,10 @@ type TourSearchFormProps = {
   disabled: boolean;
 };
 
-export const TourSearchForm: React.FC<TourSearchFormProps> = ({ submit, disabled }) => {
+export const TourSearchForm: React.FC<TourSearchFormProps> = ({
+  submit,
+  disabled,
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<GeoEntity[]>([]);
   const [loading, setLoading] = useState(false);
@@ -82,14 +87,15 @@ export const TourSearchForm: React.FC<TourSearchFormProps> = ({ submit, disabled
     setDropdownOpen(false);
   };
 
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (selected) {
-        submit(selected.id.toString()); 
-      } else {
-        alert('Будь ласка, оберіть елемент зі списку');
-      }
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setDropdownOpen(false);
+    if (selected) {
+      submit(selected.id.toString());
+    } else {
+      alert('Будь ласка, оберіть елемент зі списку');
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -106,72 +112,39 @@ export const TourSearchForm: React.FC<TourSearchFormProps> = ({ submit, disabled
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const renderIcon = (type: string) => {
-    switch (type) {
-      case 'country':
-        return '🌎';
-      case 'city':
-        return '🏙️';
-      case 'hotel':
-        return '🏨';
-      default:
-        return '';
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} style={{ position: 'relative', width: 300 }}>
-      <input
-        type='text'
-        ref={inputRef}
-        value={inputValue}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        placeholder='Введіть країну, місто або готель'
-        style={{ width: '100%', padding: '8px' }}
-      />
-      {dropdownOpen && (
-        <ul
-          ref={dropdownRef}
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            width: '100%',
-            maxHeight: 200,
-            overflowY: 'auto',
-            border: '1px solid #ccc',
-            backgroundColor: '#fff',
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-            zIndex: 100,
-          }}
-        >
-          {loading && <li style={{ padding: 8 }}>Loading...</li>}
-          {!loading && options.length === 0 && (
-            <li style={{ padding: 8 }}>Нічого не знайдено</li>
-          )}
-          {!loading &&
-            options.map((opt) => (
-              <li
-                key={opt.id}
-                onClick={() => handleSelect(opt)}
-                style={{ padding: 8, cursor: 'pointer' }}
-              >
-                {renderIcon(opt.type)} {opt.name}
-              </li>
-            ))}
-        </ul>
-      )}
-      <button
-        type='submit'
-        disabled={disabled}
-        style={{ marginTop: 8, padding: 8 }}
-      >
-        {disabled ? 'Пошук...' : 'Знайти'}
-      </button>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div>
+        <input
+          type='text'
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder='Введіть країну, місто або готель'
+        />
+
+        {dropdownOpen && (
+          <ul className={styles.dropdown} ref={dropdownRef}>
+            {loading && <li>Loading...</li>}
+            {!loading && options.length === 0 && <li>Нічого не знайдено</li>}
+            {!loading &&
+              options.map((opt) => (
+                <li
+                  key={opt.id}
+                  onClick={() => handleSelect(opt)}
+                  className={styles.liOptions}
+                >
+                  {renderIcon(opt.type)} {opt.name}
+                </li>
+              ))}
+          </ul>
+        )}
+
+        <button type='submit' disabled={disabled}>
+          {disabled ? 'Пошук...' : 'Знайти'}
+        </button>
+      </div>
     </form>
   );
 };
-

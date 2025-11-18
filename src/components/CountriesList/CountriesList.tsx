@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../redux/store';
-import type { Country } from '../../redux/reducers/types';
+import type { RootState, AppDispatch } from '@/redux/store';
+import type { Country } from '@/redux/types';
 import {
   setCountries,
   setCountriesError,
   setCountriesLoading,
-} from '../../redux/actions/countriesActions';
-import { getCountries } from '../../api/api';
+} from '@/redux/actions/countriesActions';
+import { getCountries } from '@/api/api';
 import { TourSearch } from '../TourSearch/TourSearch';
+import styles from './CountriesList.module.scss';
 
 export const CountriesList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,10 +37,11 @@ export const CountriesList: React.FC = () => {
 
   return (
     <div>
-      <ul>
+      <ul className={styles.countriesList}>
         {Object.values(data).map((c) => (
-          <li key={c.id}>
-            <img src={c.flag} alt={c.name} /> {c.name}
+          <li key={c.id} className={styles.li}>
+            <img src={c.flag} alt={c.name} />
+            <p>{c.name}</p>
           </li>
         ))}
       </ul>
@@ -47,5 +49,3 @@ export const CountriesList: React.FC = () => {
     </div>
   );
 };
-
-

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPrice, getHotel } from '../../api/api';
+import { getPrice, getHotel } from '@/api/api';
 import {
   HotelInfo,
   type HotelInfoProps,
-} from '../../components/HotelInfo/HotelInfo';
-import { TourInfo } from '../../components/TourInfo/TourInfo';
+} from '@/components/HotelInfo/HotelInfo';
+import { TourInfo } from '@/components/TourInfo/TourInfo';
 
 type Price = {
   id: string;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from './TourInfo.module.scss';
 
 export type TourInfoProps = {
   startDate: string;
@@ -48,7 +49,7 @@ export const TourInfo: React.FC<TourInfoProps> = ({
         Дати: {formatDate(startDate)} - {formatDate(endDate)}
       </p>
       <p>Ціна: {formatPrice(amount, currency)}</p>
-      <button onClick={handleClick}>Відкрити ціну</button>
+      <button className={styles.button} onClick={handleClick}>Відкрити ціну</button>
     </div>
   );
 };

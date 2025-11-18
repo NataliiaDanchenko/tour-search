@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import { CountriesList } from './components/CountriesList/CountriesList';
+import { HomePage } from '@/pages/HomePage/HomePage';
 import { TourPage } from './pages/TourPage/TourPage';
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<CountriesList />} />
+      <Route path='/' element={<HomePage />} />
       <Route path='/tour/:priceId/:hotelId' element={<TourPage />} />
     </Routes>
   );

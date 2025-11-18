@@ -1,4 +1,4 @@
-import { COUNTRIES_ERROR, COUNTRIES_LOADING, COUNTRIES_SUCCESS, type CountriesState, type CountriesAction, initialState } from "./types";
+import { COUNTRIES_ERROR, COUNTRIES_LOADING, COUNTRIES_SUCCESS, type CountriesState, type CountriesAction, initialState } from "../types";
 
 export const countriesReducer = (
   state: CountriesState = initialState,

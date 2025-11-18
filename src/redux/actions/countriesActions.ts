@@ -1,12 +1,10 @@
-// import { getCountries } from "../../api/api";
-// import type { Dispatch } from "redux";
 import {
   type Country,
   COUNTRIES_LOADING,
   COUNTRIES_SUCCESS,
   COUNTRIES_ERROR,
   type CountriesAction,
-} from "../reducers/types";
+} from "../types";
 
 export const setCountries = (countries: Record<string, Country>): CountriesAction => ({
   type: COUNTRIES_SUCCESS,

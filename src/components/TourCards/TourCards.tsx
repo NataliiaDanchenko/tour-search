@@ -1,9 +1,9 @@
-// src/components/TourCards/TourCards.tsx
 import React, { useEffect, useState } from 'react';
-import type { TourPrice } from '../../hooks/useTourSearch';
-import { useHotelsCache } from '../../hooks/useHotelsCache';
+import type { TourPrice } from '@/hooks/useTourSearch';
+import { useHotelsCache } from '@/hooks/useHotelsCache';
 import { HotelInfo, type HotelInfoProps } from '../HotelInfo/HotelInfo';
 import { TourInfo } from '../TourInfo/TourInfo';
+import styles from './TourCards.module.scss';
 
 type TourCardProps = {
   results: TourPrice[];
@@ -22,26 +22,19 @@ export const TourCards: React.FC<TourCardProps> = ({ results, countryID }) => {
     const load = async () => {
       try {
         const hotels = await getHotels(countryID);
-        console.log('Hotels loaded for countryID', countryID, hotels);
 
         const mapped = results.map((r) => {
           const hotelData: any = hotels[r.hotelID] || hotels[Number(r.hotelID)];
 
-          if (!hotelData) {
-            console.warn(
-              `Hotel not found for tour ${r.id}, hotelID: ${r.hotelID}`,
-            );
-            return { ...r, hotel: null };
-          }
+          if (!hotelData) return { ...r, hotel: null };
 
-          // Приводим к нужной форме
           const hotel: NonNullable<HotelInfoProps['hotel']> = {
             id: hotelData.id,
             name: hotelData.name,
             img: hotelData.img,
             cityName: hotelData.cityName,
             countryName: hotelData.countryName,
-            countryId: hotelData.countryId ? String(hotelData.countryId) : '', // гарантируем строку
+            countryId: hotelData.countryId ? String(hotelData.countryId) : '',
             description: hotelData.description ?? '',
             services: hotelData.services ?? {},
           };
@@ -49,37 +42,20 @@ export const TourCards: React.FC<TourCardProps> = ({ results, countryID }) => {
           return { ...r, hotel };
         });
 
-        setTours(mapped);
+        const sorted = mapped.sort((a, b) => a.amount - b.amount);
+        setTours(sorted);
       } catch (err) {
         console.error('Error loading hotels:', err);
       }
     };
 
     if (results.length > 0) load();
-  }, [results, countryID, getHotels]);
+  }, [results, countryID]);
 
   return (
-    <div
-      style={{
-        maxWidth: 700,
-        padding: 25,
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: 20,
-      }}
-    >
+    <div className={styles.tourCardsWrapper}>
       {tours.map((t) => (
-        <div
-          key={t.id}
-          style={{
-            border: '1px solid #ccc',
-            borderRadius: 8,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+        <div key={t.id} className={styles.tourCard}>
           {t.hotel ? (
             <>
               <HotelInfo hotel={t.hotel} showDescription showServices />
@@ -93,7 +69,7 @@ export const TourCards: React.FC<TourCardProps> = ({ results, countryID }) => {
               />
             </>
           ) : (
-            <div style={{ padding: 20, color: 'red' }}>
+            <div className={styles.hotelNotFound}>
               Hotel not found for tour {t.id}, hotelID: {t.hotelID}
             </div>
           )}

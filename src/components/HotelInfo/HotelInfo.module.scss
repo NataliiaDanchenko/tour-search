@@ -1,0 +1,68 @@
+.hotelInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.hotelImage {
+  max-width: 700px;
+  height: 150px;
+  object-fit: cover;
+  padding: 10px; 
+  border-radius: 15px; 
+}
+
+.hotelDetails {
+  padding: 10px;
+}
+
+.hotelHeader {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hotelFlag {
+  width: 24px;
+  height: 18px;
+}
+
+.hotelName {
+  margin: 0;
+}
+
+.hotelLocation {
+  margin: 5px 0;
+}
+
+.hotelDescription {
+  font-size: 14px;
+  color: #555;
+}
+
+.hotelServices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.hotelService {
+  padding: 2px 6px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+}
+
+.yes {
+  background-color: #d4edda;
+}
+
+.no {
+  background-color: #f8d7da;
+}
+
+.hotelError {
+  color: red;
+  padding: 10px;
+}

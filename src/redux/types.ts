@@ -10,7 +10,6 @@ export interface CountriesState {
   error: string | null;
 }
 
-// Типы экшенов
 export const COUNTRIES_LOADING = "COUNTRIES_LOADING" as const;
 export const COUNTRIES_SUCCESS = "COUNTRIES_SUCCESS" as const;
 export const COUNTRIES_ERROR = "COUNTRIES_ERROR" as const;

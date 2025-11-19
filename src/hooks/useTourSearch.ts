@@ -17,7 +17,7 @@ export const useTourSearch = () => {
   const [error, setError] = useState<string | null>(null);
 
   const activeTokenRef = useRef<string | null>(null);
-  const ignoreTokenRef = useRef<string | null>(null);   // ⭐ NEW
+  const ignoreTokenRef = useRef<string | null>(null);   
 
   const searchTours = async (countryID: string) => {
     console.log('NEW SEARCH STARTED');

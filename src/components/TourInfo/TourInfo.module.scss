@@ -1,6 +1,14 @@
+.tourInfo {
+  border: solid 1px var(--color-dark-gray);
+  border-top: none;
+  padding: 10px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .button {
-  color: blue;
-  background-color: white;
+  color: var(--color-blue);
+  background-color: var(--color-white);
   border: none;
   text-align: left;
   padding-left: 0;
@@ -9,3 +17,4 @@
 .button:hover {
   cursor: pointer;
 }
+

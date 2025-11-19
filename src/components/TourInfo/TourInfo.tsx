@@ -1,5 +1,7 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { formatDate } from '@/utils/formatDate';
+import { formatPrice } from '@/utils/formatPrice';
 import styles from './TourInfo.module.scss';
 
 export type TourInfoProps = {
@@ -20,17 +22,9 @@ export const TourInfo: React.FC<TourInfoProps> = ({
   hotelId,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const formatDate = (date: string) => {
-    const d = new Date(date);
-    return isNaN(d.getTime()) ? '-' : d.toLocaleDateString('uk-UA');
-  };
-
-  const formatPrice = (amount: number, currency: string) => {
-    return amount != null
-      ? `${amount.toLocaleString('uk-UA')} ${currency}`
-      : '-';
-  };
+  const isTourPage = location.pathname.startsWith('/tour/');
 
   const handleClick = () => {
     if (priceId && hotelId != null) {
@@ -44,12 +38,16 @@ export const TourInfo: React.FC<TourInfoProps> = ({
   };
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div className={styles.tourInfo}>
       <p>
         Дати: {formatDate(startDate)} - {formatDate(endDate)}
       </p>
       <p>Ціна: {formatPrice(amount, currency)}</p>
-      <button className={styles.button} onClick={handleClick}>Відкрити ціну</button>
+      {!isTourPage && (
+        <button onClick={handleClick} className={styles.button}>
+          Відкрити ціну
+        </button>
+      )}
     </div>
   );
 };

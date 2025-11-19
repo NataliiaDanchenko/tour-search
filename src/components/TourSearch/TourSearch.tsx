@@ -14,11 +14,23 @@ export const TourSearch = () => {
 
   return (
     <div>
-      <TourSearchForm submit={handleSubmit} disabled={loading} />
+      <div>
+        <TourSearchForm submit={handleSubmit} disabled={loading} />
+      </div>
 
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {!loading && empty && <p>За вашим запитом турів не знайдено</p>}
+      {loading && <div style={{ textAlign: 'center' }}>Loading...</div>}
+
+      {error && (
+        <div style={{ textAlign: 'center', width: '100%' }}>
+          <p style={{ color: 'red' }}>{error}</p>
+        </div>
+      )}
+
+      {!loading && empty && (
+        <div style={{ textAlign: 'center', width: '100%' }}>
+          <p>За вашим запитом турів не знайдено</p>
+        </div>
+      )}
 
       {results && results.length > 0 && selectedCountry && (
         <TourCards results={results} countryID={selectedCountry} />

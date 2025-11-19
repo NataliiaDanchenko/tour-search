@@ -37,16 +37,13 @@ export const TourPage: React.FC = () => {
       try {
         setLoading(true);
 
-        console.log('Fetching price for ID:', priceId);
         const priceResp = await getPrice(priceId);
         const priceData: Price = await priceResp.json();
-        console.log('priceData:', priceData);
         setPrice(priceData);
 
         console.log('Fetching hotel for ID:', hotelId);
         const hotelResp = await getHotel(Number(hotelId));
         const hotelData: any = await hotelResp.json();
-        console.log('hotelData:', hotelData);
 
         if (!hotelData || !hotelData.id) {
           setError(`Hotel with ID ${hotelId} not found`);

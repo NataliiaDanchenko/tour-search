@@ -8,7 +8,6 @@ import {
   setCountriesLoading,
 } from '@/redux/actions/countriesActions';
 import { getCountries } from '@/api/api';
-import { TourSearch } from '../TourSearch/TourSearch';
 import styles from './CountriesList.module.scss';
 
 export const CountriesList: React.FC = () => {
@@ -45,7 +44,6 @@ export const CountriesList: React.FC = () => {
           </li>
         ))}
       </ul>
-      <TourSearch />
     </div>
   );
 };
